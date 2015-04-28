@@ -37,6 +37,7 @@ until data.eof()
    begin
      response  = res.query("#{line}.#{domain}", "A")
      puts "#{line}.#{domain} !!!!!!"
+     sleep 1 #sleep here so we dont time out
    rescue ResolvError
      #puts "#{line} do not exist"
    rescue ResolvTimeout
