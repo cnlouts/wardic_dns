@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+
+# Christian Fernandez 2015
+# http://hispagatos http://binaryfreedom
+
 #gem install OptionParser
 #gem install dnsruby
 
