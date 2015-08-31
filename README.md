@@ -19,7 +19,13 @@ correctly.
 
 ### Dependencies
 
-TODO!!!
+This script relies on Docopt to parse command line arguements and Dnsruby to
+resolve DNS queries.
+
+```
+gem install dnsruby
+gem install docopt
+```
 
 ### GitHub
 
@@ -28,11 +34,6 @@ Download the most recent version from GitHub.
 ```
 git clone https://github.com/ChrisFernandez/wardic_dns.git
 ```
-
-Example
--------
-
-TODO!!!
 
 Contribute
 ----------
