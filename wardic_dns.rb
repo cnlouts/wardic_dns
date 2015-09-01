@@ -11,8 +11,8 @@ require 'docopt'
 
 doc=<<DOCOPT
 
-Searches for DNS subnets and sends output to STDOUT. Select verbose to get
-more complete error messages.
+Searches for DNS subnets and sends output to STDOUT. Verbose prints domain
+entries that do not exist.
 
 Usage:
   #{File.basename __FILE__} <domain_name> [options]
@@ -20,10 +20,7 @@ Usage:
   #{File.basename __FILE__} <domain_name> [-l <log> | --log <log>]
   #{File.basename __FILE__} <domain_name> [-d <dict> | --dictionary <dict>]
   #{File.basename __FILE__} -h | --help
-
-Options:
-  -h, --help              Display this message
-  -l, --log <log>         Save a log to location and silence stdout.
+Options: -h, --help              Display this message -l, --log <log>         Save a log to location and silence stdout.
   -d, --dictionary <dict> Set custom dictionary.
   -v, --verbose           Verbose output.
   -q, --quiet             Quiet output.
@@ -49,14 +46,17 @@ File.open(dict_filename, mode="r") do |f|
     line = line.strip
     begin
       res.query("#{line}.#{domain}", "A")
-      $stdout.puts "#{line}.#{domain} exists."
-      log_file.puts "#{line}.#{domain}"
+      $stdout.puts "#{line}.#{domain}"
+      log_file.puts "#{line}.#{domain}" if args["--log"]
       sleep 1
     rescue Dnsruby::ResolvError
-      $stderr.puts "#{line}.#{domain} D.N.E" if args["--verbose"]
-      log_file.puts  "#{line}.#{domain} D.N.E" if args["--verbose"]
+      if args["--verbose"]
+        $stderr.puts "#{line}.#{domain} D.N.E"
+        log_file.puts "#{line}.#{domain} D.N.E" if args["--log"]
+      end
     rescue Dnsruby::ResolvTimeout
-      log_file.puts "timeout"
+      $stderr.puts "Timeout."
+      log_file.puts "Timeout." if args["--log"]
     end
   end
 end
