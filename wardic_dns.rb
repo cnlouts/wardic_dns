@@ -15,12 +15,13 @@ Searches for DNS subnets and sends output to STDOUT. Verbose prints domain
 entries that do not exist.
 
 Usage:
-  #{File.basename __FILE__} <domain_name> [options]
-  #{File.basename __FILE__} <domain_name> [-v | --verbose]
-  #{File.basename __FILE__} <domain_name> [-l <log> | --log <log>]
-  #{File.basename __FILE__} <domain_name> [-d <dict> | --dictionary <dict>]
+  #{File.basename __FILE__} <domain_name> [-v | --verbose | -q | --quiet]
+                            [-l <log> | --log <log>]
+                            [-d <dict> | --dictionary <dict>]
   #{File.basename __FILE__} -h | --help
-Options: -h, --help              Display this message -l, --log <log>         Save a log to location and silence stdout.
+Options: 
+  -h, --help              Display this message 
+  -l, --log <log>         Save a log to file.
   -d, --dictionary <dict> Set custom dictionary.
   -v, --verbose           Verbose output.
   -q, --quiet             Quiet output.
@@ -46,7 +47,7 @@ File.open(dict_filename, mode="r") do |f|
     line = line.strip
     begin
       res.query("#{line}.#{domain}", "A")
-      $stdout.puts "#{line}.#{domain}"
+      $stdout.puts "#{line}.#{domain}" unless args["--quiet"]
       log_file.puts "#{line}.#{domain}" if args["--log"]
       sleep 1
     rescue Dnsruby::ResolvError
@@ -55,7 +56,7 @@ File.open(dict_filename, mode="r") do |f|
         log_file.puts "#{line}.#{domain} D.N.E" if args["--log"]
       end
     rescue Dnsruby::ResolvTimeout
-      $stderr.puts "Timeout."
+      $stderr.puts "Timeout." unless args["--quiet"]
       log_file.puts "Timeout." if args["--log"]
     end
   end
