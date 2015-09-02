@@ -8,6 +8,7 @@
 
 require 'dnsruby'
 require 'docopt'
+require 'pathname'
 
 doc=<<DOCOPT
 
@@ -15,18 +16,14 @@ Searches for DNS subnets and sends output to STDOUT. Verbose prints domain
 entries that do not exist.
 
 Usage:
-  #{File.basename __FILE__} <domain_name> [-v | --verbose | -q | --quiet]
-                            [-l <log> | --log <log>]
-                            [-d <dict> | --dictionary <dict>]
-  #{File.basename __FILE__} -h | --help
+  #{__FILE__} <domain_name> [-v | -q] [--log=<log>] [--dictionary=<dict>]
+  #{__FILE__} -h | --help
 Options: 
+  --log <log>             Save a log to file.
+  --dictionary <dict>     Set custom dictionary.
+  -v                      Verbose output.
+  -q                      Quiet output.
   -h, --help              Display this message 
-  -l, --log <log>         Save a log to file.
-  -d, --dictionary <dict> Set custom dictionary.
-  -v, --verbose           Verbose output.
-  -q, --quiet             Quiet output.
-
-  Default dictionary is './dictionary'.
 DOCOPT
 
 args = {}
