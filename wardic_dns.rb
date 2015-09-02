@@ -13,14 +13,14 @@ require 'pathname'
 doc=<<DOCOPT
 
 Searches for DNS subnets and sends output to STDOUT. Verbose prints domain
-entries that do not exist.
+entries that do not exist. Default dictionary location is './dictionary'.
 
 Usage:
   #{__FILE__} <domain_name> [-v | -q] [--log=<log>] [--dictionary=<dict>]
   #{__FILE__} -h | --help
 Options: 
-  --log <log>             Save a log to file.
-  --dictionary <dict>     Set custom dictionary.
+  --log=<log>             Save a log to file.
+  --dictionary=<dict>     Set custom dictionary.
   -v                      Verbose output.
   -q                      Quiet output.
   -h, --help              Display this message 
@@ -44,16 +44,16 @@ File.open(dict_filename, mode="r") do |f|
     line = line.strip
     begin
       res.query("#{line}.#{domain}", "A")
-      $stdout.puts "#{line}.#{domain}" unless args["--quiet"]
+      $stdout.puts "#{line}.#{domain}" unless args["-q"]
       log_file.puts "#{line}.#{domain}" if args["--log"]
       sleep 1
     rescue Dnsruby::ResolvError
-      if args["--verbose"]
+      if args["-v"]
         $stderr.puts "#{line}.#{domain} D.N.E"
         log_file.puts "#{line}.#{domain} D.N.E" if args["--log"]
       end
     rescue Dnsruby::ResolvTimeout
-      $stderr.puts "Timeout." unless args["--quiet"]
+      $stderr.puts "Timeout." unless args["-q"]
       log_file.puts "Timeout." if args["--log"]
     end
   end
