@@ -8,7 +8,7 @@ Wardic_DNS is a DNS subnet dictionary bruteforce attack in Ruby. The program
 will will find subnet matches on a domain based on a dictionary file. A sample
 dictionary is provided with common subnet names. 
 
-Check out "rockyou.txt" or provide your own dictionary for a more through
+Check out "rockyou.txt" or provide your own dictionary for a more thorough
 sweep.
 
 Installation
