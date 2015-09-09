@@ -1,8 +1,48 @@
-wardic_dns - war(from war dialing/driving) dictionary attack on dns
-wardic_dns is ruby  subnet dns dictionary brute force attack, will find out subnets of a domain, only as good as the dictionary file you use with it
+wardic_dns - War dictionary attack on DNS
+=========================================
 
-I recommend to use the "rockyou.txt" diccionary, but here included there is a small example dicctionary for you with common subnet names.
+Description
+-----------
 
-this is just a simple proof of concept in ruby.. feel free to fork and commit your changes back.
+Wardic_DNS is a DNS subnet dictionary bruteforce attack in Ruby. The program
+will will find subnet matches on a domain based on a dictionary file. A sample
+dictionary is provided with common subnet names. 
 
-licensed under the GPLv3
+Check out "rockyou.txt" or provide your own dictionary for a more thorough
+sweep.
+
+Installation
+------------
+
+You will need to manually install the dependancies for this program to work
+correctly.
+
+### Dependencies
+
+This script relies on Docopt to parse command line arguements and Dnsruby to
+resolve DNS queries.
+
+```
+gem install dnsruby
+gem install docopt
+```
+
+### GitHub
+
+Download the most recent version from GitHub.
+
+```
+git clone https://github.com/ChrisFernandez/wardic_dns.git
+```
+
+Contribute
+----------
+
+This project is currently just a proof of concept in Ruby. Feel free to fork
+and submit your changes back.
+
+LICENSE
+-------
+
+Licensed under the GPLv3. For additional details see the LICENSE provided in
+the repository.
